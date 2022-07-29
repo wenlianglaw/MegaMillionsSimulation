@@ -18,14 +18,18 @@ Here are the latest prizes:
 | 1 + MEGA | $4 |
 | MEGA | $2 |
 
-This program uses the previous wining numbers to simulate the randomly generated numbers:
+This generate `n` random numbers and uses the previous wining numbers to see how much we could win.
 
-7 29 60 63 66 + 15
+Previous wining numbers are from 2022-07-26: `7 29 60 63 66 + 15`
+
+I bought 200 random numbers today (2022-07-28).  Finger crossed.
 
 # How to run
 Build .cpp file and execute it.
 
 # Demo
+
+A random 1,000 plays, cost $2,000 and we win $20, nice~
 ```
 MEGA
 12
