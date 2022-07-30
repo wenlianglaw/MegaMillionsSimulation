@@ -1,3 +1,8 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <Windows.h>
+#include <assert.h>
+
 #include <algorithm>
 #include <array>
 #include <fstream>
@@ -25,6 +30,17 @@
 
 using namespace std;
 
+/* 2022-07-29's reward. */
+const int RM5 = 1'280'000'000;
+const int RFIVE = 4'234'962;
+const int RM4 = 9'167;
+const int RFOUR = 500;
+const int RM3 = 219;
+const int RTHREE = 10;
+const int RM2 = 10;
+const int RM1 = 4;
+const int RM = 2;
+
 struct MegaMillionOnePlay {
   std::array<int, 5> white_balls;
   int mega_ball = 0;
@@ -48,7 +64,7 @@ MegaMillionOnePlay GenOnePlay() {
 
   // 1-70
   int n_picked_white = 0;
-  while(n_picked_white < 5) {
+  while (n_picked_white < 5) {
     bool exists = false;
     int r = (rng() % 70) + 1;
     for (int i = 0; i < n_picked_white; i++) {
@@ -96,7 +112,7 @@ class MegaMillions {
   const std::string M1 = "1 + MEGA";
   const std::string M = "MEGA";
 
- public:
+public:
   void Init() {
     winning_numbers_.Clear();
     total_prize_winning_ = 0;
@@ -128,42 +144,42 @@ class MegaMillions {
     if (matched_mega) {
       if (matched_white == 0) {
         wining_history_[M].plays.push_back(play);
-        wining_history_[M].total_winning_prize += 2;
-        total_prize_winning_ += 2;
+        wining_history_[M].total_winning_prize += RM;
+        total_prize_winning_ += RM;
       } else if (matched_white == 1) {
         wining_history_[M1].plays.push_back(play);
-        wining_history_[M1].total_winning_prize += 4;
-        total_prize_winning_ += 4;
+        wining_history_[M1].total_winning_prize += RM1;
+        total_prize_winning_ += RM1;
       } else if (matched_white == 2) {
         wining_history_[M2].plays.push_back(play);
-        wining_history_[M2].total_winning_prize += 10;
-        total_prize_winning_ += 10;
+        wining_history_[M2].total_winning_prize += RM2;
+        total_prize_winning_ += RM2;
       } else if (matched_white == 3) {
         wining_history_[M3].plays.push_back(play);
-        wining_history_[M3].total_winning_prize += 202;
-        total_prize_winning_ += 202;
+        wining_history_[M3].total_winning_prize += RM3;
+        total_prize_winning_ += RM3;
       } else if (matched_white == 4) {
         wining_history_[M4].plays.push_back(play);
-        wining_history_[M4].total_winning_prize += 12314;
-        total_prize_winning_ += 12314;
+        wining_history_[M4].total_winning_prize += RM4;
+        total_prize_winning_ += RM4;
       } else if (matched_white == 5) {
         wining_history_[M5].plays.push_back(play);
-        wining_history_[M5].total_winning_prize += 830000000;
-        total_prize_winning_ += 830'000'000;
+        wining_history_[M5].total_winning_prize += RM5;
+        total_prize_winning_ += RM5;
       }
     } else {
       if (matched_white == 3) {
         wining_history_[THREE].plays.push_back(play);
-        wining_history_[THREE].total_winning_prize += 10;
-        total_prize_winning_ += 10;
+        wining_history_[THREE].total_winning_prize += RTHREE;
+        total_prize_winning_ += RTHREE;
       } else if (matched_white == 4) {
         wining_history_[FOUR].plays.push_back(play);
-        wining_history_[FOUR].total_winning_prize += 489;
-        total_prize_winning_ += 489;
+        wining_history_[FOUR].total_winning_prize += RFOUR;
+        total_prize_winning_ += RFOUR;
       } else if (matched_white == 5) {
         wining_history_[FIVE].plays.push_back(play);
-        wining_history_[FIVE].total_winning_prize += 2'912'502;
-        total_prize_winning_ += 2'912'502;
+        wining_history_[FIVE].total_winning_prize += RFIVE;
+        total_prize_winning_ += RFIVE;
       }
     }
   }
@@ -176,17 +192,17 @@ class MegaMillions {
     }
 
     std::cout << "Winning numbers: " << winning_numbers_.ToString()
-              << std::endl;
+      << std::endl;
     std::cout << "Total winning prize: " << total_prize_winning_ << std::endl;
   }
 
   void SetWinningNumbers(const MegaMillionOnePlay& winning_numbers) {
     winning_numbers_ = winning_numbers;
     std::sort(winning_numbers_.white_balls.begin(),
-              winning_numbers_.white_balls.end());
+      winning_numbers_.white_balls.end());
   }
 
- private:
+private:
   int64_t total_prize_winning_;
   MegaMillionOnePlay winning_numbers_;
   std::unordered_map<std::string, WiningHistory> wining_history_;
@@ -195,9 +211,9 @@ class MegaMillions {
 int main() {
   MegaMillions machine;
   machine.SetWinningNumbers(
-      {.white_balls = {7, 29, 60, 63, 66}, .mega_ball = 15});
+    { .white_balls = {13,36,45,57,67}, .mega_ball = 14 });
 
-  machine.Run(200);
+  machine.Run(200'000'000);
   machine.Print();
   return 0;
-}
+}
