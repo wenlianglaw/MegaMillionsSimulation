@@ -10,8 +10,8 @@ Here are the latest prizes:
 
 |    |      Prize      |
 |----------|:-------------:|
-| 5 + MEGA |  830,000,000 |
-| 5 |    2,912,502   |
+| 5 + MEGA |  $830,000,000 |
+| 5 |    $2,912,502   |
 | 4 + MEGA | $12,314 |
 | 4 | $489 |
 | 3 + MEGA | $202 |
@@ -25,6 +25,8 @@ This generate `n` random numbers and uses the previous wining numbers to see how
 Previous wining numbers are from 2022-07-26: `7 29 60 63 66 + 15`
 
 I bought 200 random numbers today (2022-07-28).  Finger crossed.
+
+Update:  I won $31, lost few lotteries and I claimed ~$25.  Total lost for me is ~$170.  I need a luck hit on me to enjoy the life.
 
 # How to run
 Build .cpp file and execute it.
