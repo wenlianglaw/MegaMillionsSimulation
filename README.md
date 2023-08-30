@@ -1,6 +1,8 @@
 # Mega Millions Simulation
 A simulation to draw the Mega Millions lottery!
 
+https://www.detroitnews.com/story/news/nation/2022/07/28/mega-millions-lottery-jackpot-friday-drawing-07-29-2022/10175948002/
+
 # Background
 As of 2022-07-28, Mega Millions has accumulated $1.1 Billion jackpot.
 
