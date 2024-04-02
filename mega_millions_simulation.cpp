@@ -17,6 +17,8 @@ const int RM2 = 10;
 const int RM1 = 4;
 const int RM = 2;
 
+int g_verbose = false;
+
 struct MegaMillionOnePlay {
   std::array<int, 5> white_balls;
   int mega_ball = 0;
@@ -68,8 +70,8 @@ struct WiningHistory {
 
   std::string ToString() const {
     std::string rst;
-    rst += std::to_string(total_winning_prize) + "\n";
-    for (const auto& play : plays) {
+    rst += "$" + std::to_string(total_winning_prize) + "\n";
+    for (const auto &play : plays) {
       rst += play.ToString() + "\n";
     }
     rst += "\n";
@@ -110,17 +112,17 @@ public:
     }
   }
 
-  void Claim(const MegaMillionOnePlay& play) {
+  void Claim(const MegaMillionOnePlay &play) {
     int matched_white = 0;
-    int i=0, j=0;
-    while(i<5&&j<5) {
+    int i = 0, j = 0;
+    while (i < 5 && j < 5) {
       if (play.white_balls[i] < winning_numbers_.white_balls[j]) {
         i++;
       } else if (play.white_balls[i] > winning_numbers_.white_balls[j]) {
         j++;
       } else {
         matched_white++;
-        i++,j++;
+        i++, j++;
       }
     }
 
@@ -169,36 +171,69 @@ public:
   }
 
   void Print() {
-    std::cout << std::endl;
-    for (const auto& [k, v] : wining_history_) {
-      std::cout << k << std::endl;
-      std::cout << v.ToString() << std::endl << std::endl;
+    if (g_verbose) {
+      std::cout << std::endl;
+      for (const auto &[match_type, play] : wining_history_) {
+        std::cout << match_type << std::endl;
+        std::cout << play.ToString() << std::endl << std::endl;
+      }
     }
 
     std::cout << "Winning numbers: " << winning_numbers_.ToString()
-      << std::endl;
+              << std::endl;
     std::cout << "Total winning prize: " << total_prize_winning_ << std::endl;
   }
 
-  void SetWinningNumbers(const MegaMillionOnePlay& winning_numbers) {
+  void SetWinningNumbers(const MegaMillionOnePlay &winning_numbers) {
     winning_numbers_ = winning_numbers;
     std::sort(winning_numbers_.white_balls.begin(),
-      winning_numbers_.white_balls.end());
+              winning_numbers_.white_balls.end());
   }
 
 private:
   int64_t total_prize_winning_;
   MegaMillionOnePlay winning_numbers_;
+  // <match type, plays in this type>
   std::unordered_map<std::string, WiningHistory> wining_history_;
 };
 
-int main() {
-  std::cout << "hello";
+void Help() {
+
+  std::cout << R"str(
+===========================================
+  ./mega_millions_simulation [-n 20] [-v]
+
+-n: Buy how many lotteries. Default 100.
+-v: verbose print; Default false.
+
+Using Make:
+  make run VERBOSE=-v N=50
+
+=========================================
+
+
+)str";
+}
+
+int main(int argc, char **argv) {
+  Help();
+
+  int64_t n = 50;
+  for (int i = 0; i < argc; i++) {
+    if (!strcmp(argv[i], "-v")) {
+      g_verbose = true;
+    } else if (!strcmp(argv[i], "-n")) {
+      i++;
+      n = std::stol(argv[i]);
+    }
+  }
+
   MegaMillions machine;
   machine.SetWinningNumbers(
-    { .white_balls = {13,36,45,57,67}, .mega_ball = 14 });
+      {.white_balls = {13, 36, 45, 57, 67}, .mega_ball = 14});
 
-  machine.Run(200'000);
+  std::cout << "Buying " << n << " lotteries." << std::endl;
+  machine.Run(n);
   machine.Print();
   return 0;
 }
