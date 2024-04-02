@@ -1,32 +1,8 @@
-#define _CRT_SECURE_NO_WARNINGS
-
-#include <Windows.h>
-#include <assert.h>
-
-#include <algorithm>
 #include <array>
-#include <fstream>
-#include <functional>
-#include <future>
-#include <iomanip>
 #include <iostream>
-#include <list>
-#include <map>
-#include <memory>
-#include <numeric>
-#include <queue>
 #include <random>
-#include <set>
-#include <sstream>
-#include <stack>
 #include <string>
-#include <thread>
-#include <type_traits>
-#include <typeinfo>
 #include <unordered_map>
-#include <unordered_set>
-#include <valarray>
-#include <vector>
 
 using namespace std;
 
@@ -136,8 +112,16 @@ public:
 
   void Claim(const MegaMillionOnePlay& play) {
     int matched_white = 0;
-    for (int i = 0; i < 5; i++) {
-      matched_white += play.white_balls[i] == winning_numbers_.white_balls[i];
+    int i=0, j=0;
+    while(i<5&&j<5) {
+      if (play.white_balls[i] < winning_numbers_.white_balls[j]) {
+        i++;
+      } else if (play.white_balls[i] > winning_numbers_.white_balls[j]) {
+        j++;
+      } else {
+        matched_white++;
+        i++,j++;
+      }
     }
 
     bool matched_mega = play.mega_ball == winning_numbers_.mega_ball;
@@ -209,11 +193,12 @@ private:
 };
 
 int main() {
+  std::cout << "hello";
   MegaMillions machine;
   machine.SetWinningNumbers(
     { .white_balls = {13,36,45,57,67}, .mega_ball = 14 });
 
-  machine.Run(200'000'000);
+  machine.Run(200'000);
   machine.Print();
   return 0;
 }
