@@ -28,6 +28,8 @@ I bought 200 random numbers today (2022-07-28).  Finger crossed.
 
 Update:  I won $31, lost few lotteries and I claimed ~$25.  Total lost for me is ~$170.  I need a luck hit on me to enjoy the life.
 
+Update 2024-04-01:  I bought another $20.  Drawing today, finger crossed.
+
 # How to run
 Build .cpp file and execute it.
 
